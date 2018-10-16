@@ -1,0 +1,34 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": "dist/fitness",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      ".vscode",
+      ".git",
+      ".gitignore",
+      ".editorconfig",
+      ".idea/*",
+      "*.iml",
+      "src/**/.*",
+      "database.rules.json",
+      "package.json",
+      "angular.json",
+      "README.md",
+      "tsconfig.json",
+      "tslint.json",
+      "webpack.config.js",
+      "yarn.lock",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
