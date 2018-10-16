@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-auth-form',
   template: `
-    <p>
-      auth-form works!
-    </p>
+    <div>
+      Auth Form
+    </div>
   `,
   styleUrls: ['./auth-form.component.scss']
 })
