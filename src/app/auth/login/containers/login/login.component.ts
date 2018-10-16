@@ -4,8 +4,13 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-login',
   template: `
     <div>
-      Login
-      <app-auth-form></app-auth-form>
+      <app-auth-form>
+        <h1>Login</h1>
+        <a routerLink="/auth/register">Not registered ?</a>
+        <button type="submit">
+          Login
+        </button>
+      </app-auth-form>
     </div>
   `
 })

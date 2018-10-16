@@ -4,9 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <div>
-      <h1>
-        Welcome to {{ title }}!
-      </h1>
       <div class="wrapper">
         <router-outlet></router-outlet>
       </div>
