@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-auth-form',
@@ -7,7 +7,7 @@ import {FormBuilder, Validators} from "@angular/forms";
     <div class="auth-form">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <ng-content select="h1"></ng-content>
-        
+
         <label>
           <input type="text" placeholder="Email Address" formControlName="email"/>
         </label>
@@ -15,6 +15,9 @@ import {FormBuilder, Validators} from "@angular/forms";
           <input type="password" placeholder="Enter Password" formControlName="password"/>
         </label>
         
+        <div class="error" *ngIf="emailFormat">Invalid Email format</div>
+        <div class="error" *ngIf="passwordInvalid">Password is required</div>
+
         <ng-content select=".error"></ng-content>
 
         <div class="auth-form__action">
@@ -31,9 +34,14 @@ import {FormBuilder, Validators} from "@angular/forms";
 })
 export class AuthFormComponent implements OnInit {
 
+  // we emit all the form group so we can access to all values and all FormGroup functionality in container
+  @Output()
+  submitted = new EventEmitter<FormGroup>();
+
+  // our form group named form (so [formGroup]="form") with just two text controls inside
   form = this.fb.group({
-    email : ['', Validators.email],
-    password : ['', Validators.required],
+    email: ['', Validators.email],
+    password: ['', Validators.required],
   });
 
   constructor(private fb: FormBuilder) {
@@ -43,7 +51,18 @@ export class AuthFormComponent implements OnInit {
   }
 
   onSubmit() {
-
+    if (this.form.valid) {
+      this.submitted.emit(this.form);
+    }
   }
 
+  get passwordInvalid(){
+    const control = this.form.get('password');
+    return control.hasError('required') && control.touched;
+  }
+
+  get emailFormat(){
+    const control = this.form.get('email');
+    return control.hasError('email') && control.touched;
+  }
 }
