@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-meal',
   template: `
-    <p>
-      meal works!
-    </p>
+   <div class="meals">
+     create meal component
+   </div>
   `,
   styleUrls: ['./meal.component.scss']
 })

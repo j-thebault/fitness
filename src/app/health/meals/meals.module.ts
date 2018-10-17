@@ -7,7 +7,8 @@ import {SharedModule} from "../shared/shared.module";
 import { MealComponent } from './containers/meal/meal.component';
 
 export const ROUTE: Routes = [
-  {path: '', component: MealsComponent}
+  {path: '', component: MealsComponent},
+  {path: 'new', component: MealComponent}
 ];
 
 @NgModule({
