@@ -5,11 +5,13 @@ import {AppComponent} from './app.component';
 import {AuthModule} from "./auth/auth.module";
 import {RouterModule, Routes} from "@angular/router";
 import {Store} from "./store";
-import { HeaderComponent } from './components/header/header.component';
-import { NavComponent } from './components/nav/nav.component';
+import {HeaderComponent} from './components/header/header.component';
+import {NavComponent} from './components/nav/nav.component';
 import {HealthModule} from "./health/health.module";
 
-export const ROUTES: Routes = [];
+export const ROUTES: Routes = [
+  {path: '', pathMatch: 'full', redirectTo: 'schedule'}
+];
 
 @NgModule({
   declarations: [
