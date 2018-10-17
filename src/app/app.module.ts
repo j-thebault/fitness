@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {AuthModule} from "./auth/auth.module";
 import {RouterModule, Routes} from "@angular/router";
+import {Store} from "./store";
 
 export const ROUTES: Routes = [];
 
@@ -16,7 +17,10 @@ export const ROUTES: Routes = [];
     AuthModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [],
+  // here i declare that app module will provide a store object in root injector
+  // all injectors derived from the root injector will be provided with the same instance of the Store class
+  // this is just a singleton
+  providers: [Store],
   bootstrap: [AppComponent]
 })
 export class AppModule {
