@@ -26,6 +26,7 @@ import {Store} from "../../../../store";
           <img src="assets/img/face.svg"/>
           No meals, add a new meal to start
         </div>
+        <app-list-item *ngFor="let meal of meals" [item]="meal" (remove)="removeMeal($event)"></app-list-item>
         <ng-template #loading>
           <div class="message">
             <img src="assets/img/loading.svg">
@@ -51,5 +52,9 @@ export class MealsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+
+  removeMeal(event: Meal) {
+    this.mealsService.removeMeal(event);
   }
 }
