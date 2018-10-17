@@ -5,12 +5,16 @@ import {AppComponent} from './app.component';
 import {AuthModule} from "./auth/auth.module";
 import {RouterModule, Routes} from "@angular/router";
 import {Store} from "./store";
+import { HeaderComponent } from './components/header/header.component';
+import { NavComponent } from './components/nav/nav.component';
 
 export const ROUTES: Routes = [];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
