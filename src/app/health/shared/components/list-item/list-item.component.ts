@@ -45,7 +45,7 @@ export class ListItemComponent implements OnInit {
   }
 
   getRoute(meal: any) {
-    return [`../meals`, this.item.key]
+    return [`../meals`, this.item.$key]
   }
 
   removeItem() {
