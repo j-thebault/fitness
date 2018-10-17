@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {MealsComponent} from './containers/meals/meals.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule, Routes} from "@angular/router";
+import {SharedModule} from "../shared/shared.module";
+import { MealComponent } from './containers/meal/meal.component';
 
 export const ROUTE: Routes = [
   {path: '', component: MealsComponent}
@@ -12,9 +14,10 @@ export const ROUTE: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(ROUTE)
+    RouterModule.forChild(ROUTE),
+    SharedModule
   ],
-  declarations: [MealsComponent]
+  declarations: [MealsComponent, MealComponent]
 })
 export class MealsModule {
 }
