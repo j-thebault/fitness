@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Meal, MealsService} from "../../../shared/services/meals.service";
+import {Workout, MealsService} from "../../../shared/services/meals.service";
 import {Observable, Subscription} from "rxjs/index";
 import {Store} from "../../../../store";
 
@@ -40,7 +40,7 @@ import {Store} from "../../../../store";
 })
 export class MealsComponent implements OnInit, OnDestroy {
 
-  meals$: Observable<Meal[]>;
+  meals$: Observable<Workout[]>;
   subscription: Subscription;
 
   constructor(private mealsService: MealsService, private store: Store) {
@@ -48,13 +48,13 @@ export class MealsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.mealsService.meals$.subscribe();
-    this.meals$ = this.store.select<Meal[]>('meals');
+    this.meals$ = this.store.select<Workout[]>('meals');
   }
 
   ngOnDestroy(): void {
   }
 
-  removeMeal(event: Meal) {
+  removeMeal(event: Workout) {
     this.mealsService.removeMeal(event.$key);
   }
 }

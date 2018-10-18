@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Meal, MealsService} from "../../../shared/services/meals.service";
+import {Workout, MealsService} from "../../../shared/services/meals.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs/index";
 import {switchMap} from "rxjs/internal/operators";
@@ -37,7 +37,7 @@ import {switchMap} from "rxjs/internal/operators";
 })
 export class MealComponent implements OnInit, OnDestroy {
 
-  meal$: Observable<Meal>;
+  meal$: Observable<Workout>;
   subscription: Subscription;
 
   constructor(private mealService: MealsService, private router: Router, private route: ActivatedRoute) {
@@ -56,7 +56,7 @@ export class MealComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  async addMeal(meal: Meal) {
+  async addMeal(meal: Workout) {
     await this.mealService.addMeal(meal);
     this.backToMeals();
   }
@@ -66,13 +66,13 @@ export class MealComponent implements OnInit, OnDestroy {
   }
 
   //the meal came from the form... it will not have an id initialized because we have no controls on $id
-  async updateMeal(meal: Meal) {
+  async updateMeal(meal: Workout) {
     const key = this.route.snapshot.params.id;
     await this.mealService.updateMeal(key, meal);
     this.router.navigate(['meals']);
   }
 
-  async removeMeal(meal: Meal) {
+  async removeMeal(meal: Workout) {
     const key = this.route.snapshot.params.id;
     await this.mealService.removeMeal(key);
     this.router.navigate(['meals']);
