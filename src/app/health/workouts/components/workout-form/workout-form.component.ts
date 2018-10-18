@@ -22,7 +22,7 @@ import {Workout} from "../../../shared/services/workouts.service";
             <h3>Workout Name</h3>
             <input
               type="text"
-              placeholder="e.g. English Breakfast"
+              [placeholder]="placeholder"
               formControlName="name"
             />
             <div class="error" *ngIf="required">
@@ -30,10 +30,41 @@ import {Workout} from "../../../shared/services/workouts.service";
             </div>
           </label>
           <label>
-            {{form.value | json}}
             <h3>Type</h3>
             <app-workout-type formControlName="type"></app-workout-type>
           </label>
+        </div>
+        
+        <div class="workout-form__details">
+          <div *ngIf="form.get('type').value === 'strength'">
+            <div formGroupName="strength" class="workout-form__fields">
+              <label>
+                <h3>Reps</h3>
+                <input type="number" formControlName="reps"/>
+              </label>
+              <label>
+                <h3>Sets</h3>
+                <input type="number" formControlName="sets"/>
+              </label>
+              <label>
+                <h3>Weight <span>(kg)</span></h3>
+                <input type="number" formControlName="weight"/>
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf="form.get('type').value === 'endurance'">
+            <div formGroupName="endurance" class="workout-form__fields">
+              <label>
+                <h3>Distance <span>(km)</span></h3>
+                <input type="number" formControlName="distance"/>
+              </label>
+              <label>
+                <h3>Duration <span>(minutes)</span></h3>
+                <input type="number" formControlName="duration"/>
+              </label>
+            </div>
+          </div>
         </div>
 
         <div class="workout-form__submit">
@@ -79,10 +110,26 @@ export class WorkoutFormComponent implements OnInit, OnChanges {
 
   form = this.fb.group({
     name: this.fb.control('', Validators.required),
-    type: 'strength'
+    type: 'strength',
+    strength: this.fb.group({
+      reps: 0,
+      sets: 0,
+      weight: 0
+    }),
+    endurance: this.fb.group({
+      distance: 0,
+      duration: 0
+    })
   });
 
   constructor(private fb: FormBuilder) {
+  }
+
+  get placeholder(){
+    const type = this.form.get('type').value;
+    return `
+    e.g. ${type === 'strength' ? 'Benchpress' : 'Treadmill'}
+    `
   }
 
   // Need this because we do not re instantiate the component each time

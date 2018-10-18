@@ -28,7 +28,7 @@ import {Workout, WorkoutsService} from "../../../shared/services/workouts.servic
       <ng-template #loading>
         <div class="message">
           <img src="assets/img/loading.svg"/>
-          Fetching Meal...
+          Fetching Workout...
         </div>
       </ng-template>
     </div>
