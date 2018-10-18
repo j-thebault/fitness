@@ -41,8 +41,12 @@ export class MealsService {
     return this.db.list(`meals/${this.uid}`).push(meal);
   }
 
-  removeMeal(meal: Meal) {
-    return this.db.list(`meals/${this.uid}`).remove(meal.$key);
+  updateMeal(key: string, meal: Meal) {
+    return this.db.object(`meals/${this.uid}/${key}`).update(meal);
+  }
+
+  removeMeal(key: string) {
+    return this.db.list(`meals/${this.uid}`).remove(key);
   }
 
   getMeal(key: string): Observable<any> {

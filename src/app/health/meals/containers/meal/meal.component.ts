@@ -17,7 +17,20 @@ import {switchMap} from "rxjs/internal/operators";
           <ng-template #title>Loading...</ng-template>
         </h1>
       </div>
-      <app-meal-form (create)="addMeal($event)"></app-meal-form>
+      <div *ngIf="meal$ | async as meal; else loading;">
+        <app-meal-form
+          [meal]="meal"
+          (create)="addMeal($event)"
+          (update)="updateMeal($event)"
+          (remove)="removeMeal($event)"
+        ></app-meal-form>
+      </div>
+      <ng-template #loading>
+        <div class="message">
+          <img src="assets/img/loading.svg"/>
+          Fetching Meal...
+        </div>
+      </ng-template>
     </div>
   `,
   styleUrls: ['./meal.component.scss']
@@ -49,6 +62,19 @@ export class MealComponent implements OnInit, OnDestroy {
   }
 
   private backToMeals() {
+    this.router.navigate(['meals']);
+  }
+
+  //the meal came from the form... it will not have an id initialized because we have no controls on $id
+  async updateMeal(meal: Meal) {
+    const key = this.route.snapshot.params.id;
+    await this.mealService.updateMeal(key, meal);
+    this.router.navigate(['meals']);
+  }
+
+  async removeMeal(meal: Meal) {
+    const key = this.route.snapshot.params.id;
+    await this.mealService.removeMeal(key);
     this.router.navigate(['meals']);
   }
 }

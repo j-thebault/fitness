@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Meal} from "../../../shared/services/meals.service";
 
@@ -43,8 +52,20 @@ import {Meal} from "../../../shared/services/meals.service";
 
         <div class="meal-form__submit">
           <div>
-            <button type="button" class="button" (click)="createMeal()">Create Meal</button>
+            <button *ngIf="!exists" type="button" class="button" (click)="createMeal()">Create Meal</button>
+            <button *ngIf="exists" type="button" class="button" (click)="updateMeal()">Save</button>
             <a class="button button--cancel" [routerLink]="['../']">Cancel</a>
+          </div>
+          <div class="meal-form__delete" *ngIf="exists">
+            <div *ngIf="toggled">
+              <p>Delete item ?</p>
+              <button class="confirm" type="button" (click)="removeMeal()">Yes</button>
+              <button class="cancel" type="button" (click)="toggle()">No</button>
+            </div>
+
+            <button class="button button--delete" type="button" (click)="toggle()">
+              Delete
+            </button>
           </div>
         </div>
       </form>
@@ -52,10 +73,23 @@ import {Meal} from "../../../shared/services/meals.service";
   `,
   styleUrls: ['./meal-form.component.scss']
 })
-export class MealFormComponent implements OnInit {
+export class MealFormComponent implements OnInit, OnChanges {
+
+  toggled = false;
+
+  exists = false;
+
+  @Input()
+  meal: Meal;
 
   @Output()
   create = new EventEmitter<Meal>();
+
+  @Output()
+  update = new EventEmitter<Meal>();
+
+  @Output()
+  remove = new EventEmitter<Meal>();
 
   form = this.fb.group({
     name: this.fb.control('', Validators.required),
@@ -63,6 +97,24 @@ export class MealFormComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder) {
+  }
+
+  // Need this because we do not re instantiate the component each time
+  // Just the @Input will change... so we need to implement the logic in onChange callback, not in onInit ^^
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Changes', changes);
+    if (this.meal && this.meal.name) {
+      this.exists = true;
+      this.emptyIngredients();
+
+      const value = this.meal;
+      this.form.patchValue(value);
+      if (value.ingredients) {
+        for (const item of value.ingredients) {
+          this.ingredients.push(new FormControl(item));
+        }
+      }
+    }
   }
 
   get ingredients() {
@@ -80,10 +132,27 @@ export class MealFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  emptyIngredients() {
+    //angular quirk with FormArray... we need to use removeAt at the head of array to empty the array of controls
+    while (this.ingredients.controls.length) {
+      this.ingredients.removeAt(0);
+    }
+  }
+
   createMeal() {
     if (this.form.valid) {
       this.create.emit(this.form.value);
     }
+  }
+
+  updateMeal() {
+    if (this.form.valid) {
+      this.update.emit(this.form.value);
+    }
+  }
+
+  removeMeal() {
+    this.remove.emit(this.form.value);
   }
 
   addIngredient() {
@@ -93,4 +162,10 @@ export class MealFormComponent implements OnInit {
   removeIngredient(i: number) {
     this.ingredients.removeAt(i);
   }
+
+  toggle() {
+    this.toggled = !this.toggled;
+  }
+
+
 }
