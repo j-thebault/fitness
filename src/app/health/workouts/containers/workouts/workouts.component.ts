@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from "../../../../store";
-import {Workout, MealsService} from "../../../shared/services/meals.service";
+import {Meal, MealsService} from "../../../shared/services/meals.service";
 import {Observable, Subscription} from "rxjs/index";
 import {Workout, WorkoutsService} from "../../../shared/services/workouts.service";
 
@@ -56,7 +56,7 @@ export class WorkoutsComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  removeWorkouts(event: Workout) {
+  removeWorkouts(event: Meal) {
     this.workoutsService.removeWorkout(event.$key);
   }
 

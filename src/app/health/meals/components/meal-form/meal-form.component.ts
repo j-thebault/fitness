@@ -9,7 +9,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
-import {Workout} from "../../../shared/services/meals.service";
+import {Meal} from "../../../shared/services/meals.service";
 
 @Component({
   selector: 'app-meal-form',
@@ -80,16 +80,16 @@ export class MealFormComponent implements OnInit, OnChanges {
   exists = false;
 
   @Input()
-  meal: Workout;
+  meal: Meal;
 
   @Output()
-  create = new EventEmitter<Workout>();
+  create = new EventEmitter<Meal>();
 
   @Output()
-  update = new EventEmitter<Workout>();
+  update = new EventEmitter<Meal>();
 
   @Output()
-  remove = new EventEmitter<Workout>();
+  remove = new EventEmitter<Meal>();
 
   form = this.fb.group({
     name: this.fb.control('', Validators.required),

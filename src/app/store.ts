@@ -1,15 +1,14 @@
 import {BehaviorSubject, Observable} from "rxjs/index";
 import {distinctUntilChanged, pluck} from "rxjs/internal/operators";
 import {User} from "./auth/shared/services/auth.service";
-import {Workout} from "./health/shared/services/meals.service";
-import {Workout} from "./health/shared/services/workouts.service";
+import {Meal} from "./health/shared/services/meals.service";
 
 export interface State {
   // definition of type that have key properties as string and value any
   // just like a plain old js object
   user: User;
-  meals: Workout[];
-  workouts: Workout[];
+  meals: Meal[];
+  workouts: Meal[];
   [key: string]: any
 }
 

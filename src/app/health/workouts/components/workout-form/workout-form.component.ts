@@ -29,6 +29,11 @@ import {Workout} from "../../../shared/services/workouts.service";
               Workout name is required
             </div>
           </label>
+          <label>
+            {{form.value | json}}
+            <h3>Type</h3>
+            <app-workout-type formControlName="type"></app-workout-type>
+          </label>
         </div>
 
         <div class="workout-form__submit">
@@ -74,7 +79,7 @@ export class WorkoutFormComponent implements OnInit, OnChanges {
 
   form = this.fb.group({
     name: this.fb.control('', Validators.required),
-    ingredients: this.fb.array([''])
+    type: 'strength'
   });
 
   constructor(private fb: FormBuilder) {
